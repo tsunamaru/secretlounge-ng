@@ -2,6 +2,7 @@ import logging
 from datetime import datetime, timedelta
 from threading import Lock
 from importlib import import_module
+import subprocess
 
 from . import replies as rp
 from .globals import *
@@ -523,3 +524,8 @@ def _push_system_message(m, *, who=None, except_who=None, reply_to=None):
 	if who is None: # we only need an ID if multiple people can see the msg
 		msid = ch.assignMessageId(CachedMessage())
 	Sender.reply(m, msid, who, except_who, reply_to)
+
+@requireUser
+def get_uname(user):
+	uname = subprocess.run(["uname", "-a"], stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
+	return rp.Reply(rp.types.CUSTOM, text=uname)

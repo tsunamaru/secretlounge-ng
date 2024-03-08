@@ -69,7 +69,7 @@ def init(config, _db, _ch):
 		"start", "stop", "users", "info", "motd", "toggledebug", "togglekarma",
 		"version", "source", "modhelp", "adminhelp", "modsay", "adminsay", "mod",
 		"admin", "warn", "delete", "remove", "uncooldown", "blacklist", "s", "sign",
-		"tripcode", "t", "tsign", "cleanup"
+		"tripcode", "t", "tsign", "cleanup", "uname"
 	]
 	for c in cmds: # maps /<c> to the function cmd_<c>
 		c = c.lower()
@@ -774,3 +774,7 @@ def cmd_tsign(ev, arg):
 	relay_inner(ev, tripcode=True)
 
 cmd_t = cmd_tsign # alias
+
+def cmd_uname(ev):
+	c_user = UserContainer(ev.from_user)
+	send_answer(ev, core.get_uname(c_user), reply_to=True)
