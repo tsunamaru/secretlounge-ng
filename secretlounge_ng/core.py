@@ -529,3 +529,17 @@ def _push_system_message(m, *, who=None, except_who=None, reply_to=None):
 def get_uname(user):
 	uname = subprocess.run(["uname", "-a"], stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
 	return rp.Reply(rp.types.CUSTOM, text=uname)
+
+@requireUser
+def get_hash(user):
+	gitrev_local = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
+	gitrev_remote = subprocess.run(["git", "ls-remote", "origin", "HEAD"], stdout=subprocess.PIPE).stdout.decode("utf-8").strip().split("\t")[0]
+	gitdiff_local = subprocess.run(["git", "diff", "--shortstat", "HEAD"], stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
+	
+	if gitrev_local == gitrev_remote:
+		if gitdiff_local == "":
+			return rp.Reply(rp.types.CUSTOM, text="No changes, running version is up-to-date.")
+		else:
+			return rp.Reply(rp.types.CUSTOM, text="Local changes detected: " + gitdiff_local)
+
+	return rp.Reply(rp.types.CUSTOM, text="Local and remote versions differ, running version is not up-to-date.")
