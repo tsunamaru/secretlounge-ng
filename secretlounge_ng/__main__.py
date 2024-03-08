@@ -82,7 +82,7 @@ def main():
 	config = load_config(configpath)
 
 	logging.basicConfig(format="%(levelname)-7s [%(asctime)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=loglevel)
-	logging.info("secretlounge-ng v%s starting up", VERSION)
+	logging.info("secretlounge-ng [assthread edition] v%s starting up", VERSION)
 
 	# Create and initialize various classes
 	db = open_db(config)

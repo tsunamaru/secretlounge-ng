@@ -3,9 +3,12 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "secretlounge-ng"
+name = "secretlounge-ng [assthread edition]"
 version = "1.8.1"
-authors = [{ name="sfan5" }]
+authors = [
+  { name="tsunamaru", email="tsunamaru@airmail.cc", },
+  { name="sfan5", email="sfan5@live.de" },
+]
 description = "a bot to make an anonymous group chat on Telegram "
 readme = "README.md"
 requires-python = ">=3.7"
