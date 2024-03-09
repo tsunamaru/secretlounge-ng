@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "secretlounge-ng [assthread edition]"
-version = "1.8.1"
+version = "1.8.2"
 authors = [
   { name="tsunamaru", email="tsunamaru@airmail.cc", },
   { name="sfan5", email="sfan5@live.de" },
