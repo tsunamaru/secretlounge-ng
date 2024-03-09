@@ -315,6 +315,13 @@ def toggle_karma(user):
 	return rp.Reply(rp.types.BOOLEAN_CONFIG, description="Karma notifications", enabled=not new)
 
 @requireUser
+def toggle_requests(user):
+	with db.modifyUser(id=user.id) as user:
+		user.hideRequests = not user.hideRequests
+		new = user.hideRequests
+	return rp.Reply(rp.types.BOOLEAN_CONFIG, description="DM request notifications", enabled=not new)
+
+@requireUser
 def get_tripcode(user):
 	if not enable_signing:
 		return rp.Reply(rp.types.ERR_COMMAND_DISABLED)
@@ -524,6 +531,18 @@ def _push_system_message(m, *, who=None, except_who=None, reply_to=None):
 	if who is None: # we only need an ID if multiple people can see the msg
 		msid = ch.assignMessageId(CachedMessage())
 	Sender.reply(m, msid, who, except_who, reply_to)
+
+@requireUser
+def request_dm(user, msid):
+	cm = ch.getMessage(msid)
+	if cm is None or cm.user_id is None:
+		return rp.Reply(rp.types.ERR_NOT_IN_CACHE)
+	if user.id == cm.user_id:
+		return rp.Reply(rp.types.ERR_DM_REQUEST_OWN_MESSAGE)
+	user2 = db.getUser(id=cm.user_id)
+	if not user2.hideRequests:
+		_push_system_message(rp.Reply(rp.types.DM_REQUEST_NOTIFICATION, id=user.id, username=user.getFormattedName()), who=user2, reply_to=msid)
+	return rp.Reply(rp.types.DM_REQUEST_ACKNOWLEDGEMENT)
 
 @requireUser
 def get_uname(user):

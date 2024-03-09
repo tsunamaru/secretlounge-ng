@@ -3,7 +3,7 @@ from .util import Enum
 # a few utility functions
 def escape_html(s):
 	ret = ""
-	for c in s:
+	for c in str(s):
 		if c in ("<", ">", "&"):
 			c = "&#" + str(ord(c)) + ";"
 		ret += c
