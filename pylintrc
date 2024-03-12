@@ -25,3 +25,8 @@ disable=
 	unused-wildcard-import,
 	wildcard-import,
 	wrong-import-order,
+	redefined-builtin,
+	import-error,
+	unused-argument,
+	too-many-locals,
+	too-many-arguments,

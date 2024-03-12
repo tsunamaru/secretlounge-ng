@@ -3,7 +3,6 @@ import sys
 import os
 import logging
 import sqlite3
-import readline # for input()
 from datetime import datetime, timedelta
 from time import sleep
 
@@ -147,7 +146,8 @@ def sync(d):
 			stat1, stat2 = 0, 0
 			for db in d.values():
 				a, b = ban_user(db, id, reason)
-				stat1 += a; stat2 += b
+				stat1 += a
+				stat2 += b
 			if stat1 + stat2 > 0:
 				logging.info("Transferred ban of user id %d orginated from %s (b:%d p:%d)", id, from_name, stat1, stat2)
 		# Zzz..
@@ -181,7 +181,8 @@ def c_ban(d, argv):
 	stat1, stat2 = 0, 0
 	for db in d.values():
 		a, b = ban_user(db, id, reason)
-		stat1 += a; stat2 += b
+		stat1 += a
+		stat2 += b
 	logging.info("Success (banned:%d placeholder:%d)", stat1, stat2)
 
 def c_unban(d, argv):
@@ -277,6 +278,6 @@ def main(argv):
 
 	usage(actions)
 	exit(1)
-		
+
 if __name__ == "__main__":
 	main(sys.argv[1:])

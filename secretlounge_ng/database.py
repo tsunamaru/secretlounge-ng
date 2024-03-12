@@ -3,7 +3,6 @@ import os
 import json
 import sqlite3
 from datetime import date, datetime, timedelta, timezone
-from random import randint
 from threading import RLock
 from typing import Optional, Generator
 
@@ -67,7 +66,8 @@ class User():
 		return self.rank < 0
 	def getObfuscatedId(self):
 		salt = date.today().toordinal()
-		if salt & 0xff == 0: salt >>= 8 # zero bits are bad for hashing
+		if salt & 0xff == 0:
+			salt >>= 8 # zero bits are bad for hashing
 		value = (self.id * salt) & 0xffffff
 		alpha = "0123456789abcdefghijklmnopqrstuv"
 		return ''.join(alpha[n%32] for n in (value, value>>5, value>>10, value>>15))
@@ -185,7 +185,8 @@ class JSONDatabase(Database):
 		return {"motd": config.motd}
 	@staticmethod
 	def _systemConfigFromDict(d):
-		if d is None: return None
+		if d is None:
+			return None
 		config = SystemConfig()
 		config.motd = d["motd"]
 		return config
@@ -203,7 +204,8 @@ class JSONDatabase(Database):
 		return d
 	@staticmethod
 	def _userFromDict(d):
-		if d is None: return None
+		if d is None:
+			return None
 		props = ["id", "username", "realname", "rank", "blacklistReason",
 			"warnings", "karma", "hideKarma", "hideRequests", "debugEnabled"]
 		props_d = [("tripcode", None)]
@@ -219,11 +221,11 @@ class JSONDatabase(Database):
 		return user
 	def _load(self):
 		with self.lock:
-			with open(self.path, "r") as f:
+			with open(self.path, "r", encoding="utf-8") as f:
 				self.db = json.load(f)
 	def _save(self):
 		with self.lock:
-			with open(self.path + "~", "w") as f:
+			with open(self.path + "~", "w", encoding="utf-8") as f:
 				json.dump(self.db, f)
 			os.replace(self.path + "~", self.path)
 	def getUser(self, *, id=None):
@@ -283,7 +285,8 @@ class SQLiteDatabase(Database):
 		return {"motd": config.motd}
 	@staticmethod
 	def _systemConfigFromDict(d):
-		if len(d) == 0: return None
+		if len(d) == 0:
+			return None
 		config = SystemConfig()
 		config.motd = d["motd"]
 		return config

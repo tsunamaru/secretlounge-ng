@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
 import os
 import logging
-import yaml
 import sys
 import json
 from datetime import datetime, timedelta
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), ".."))
 from secretlounge_ng.globals import *
-from secretlounge_ng.database import User, SystemConfig, JSONDatabase, SQLiteDatabase
+from secretlounge_ng.database import User, SystemConfig
 from secretlounge_ng.__main__ import open_db, load_config
 
 def safe_time(n):
-	if n > 2**32:
-		n = 2**32
+	n = min(n, 2**32)
 	return datetime.utcfromtimestamp(n)
 
 def usage():
@@ -27,7 +25,7 @@ def main(configpath, importpath):
 
 	db = open_db(config)
 
-	with open(importpath, "r") as f:
+	with open(importpath, "r", encoding="utf-8") as f:
 		data = json.load(f)
 
 	had_ids = set()
@@ -38,7 +36,7 @@ def main(configpath, importpath):
 		u.realname = j.get("realname", "")
 		u.rank = j["rank"]
 		u.joined = safe_time(0)
-		if j.get("left", False) != False:
+		if j.get("left", False) is not False:
 			u.left = safe_time(j["left"] // 1000)
 		u.lastActive = u.joined
 		if "banned" in j.keys():

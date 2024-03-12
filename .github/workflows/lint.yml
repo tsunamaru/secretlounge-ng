@@ -17,7 +17,7 @@ jobs:
   pylint:
     runs-on: ubuntu-latest
     container:
-      image: python:3.11-slim
+      image: python:3.12-slim
     steps:
       - uses: actions/checkout@v3
       - name: Install deps
@@ -26,7 +26,5 @@ jobs:
           pip install pylint
 
       - name: Lint
-        run: |
-          for mod in secretlounge_ng util; do
-            pylint --fail-under=0 --fail-on=E "$mod"
-          done
+        run: pylint --fail-under=0 --fail-on=E --recursive=y .
+        # For local env, you might want to pass --ignore-paths=venv

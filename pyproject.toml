@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "secretlounge-ng [assthread edition]"
 version = "1.8.2"
 authors = [
-  { name="tsunamaru", email="tsunamaru@airmail.cc", },
+  { name="tsunamaru", email="tsunamaru@airmail.cc" },
   { name="sfan5", email="sfan5@live.de" },
 ]
 description = "a bot to make an anonymous group chat on Telegram "

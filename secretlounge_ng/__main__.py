@@ -36,12 +36,12 @@ def usage():
 	print("  -c    Location of config file (default: ./config.yaml)")
 
 def load_config(path):
-	with open(path, "r") as f:
+	with open(path, "r", encoding="utf-8") as f:
 		config = yaml.safe_load(f)
 	# load this variable from another YAML if defined
 	tmp = config.get("linked_network")
 	if isinstance(tmp, str):
-		with open(tmp, "r") as f:
+		with open(tmp, "r", encoding="utf-8") as f:
 			config["linked_network"] = yaml.safe_load(f)
 
 	return config
