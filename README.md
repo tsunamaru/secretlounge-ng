@@ -95,8 +95,8 @@ When using the source in this repository*¹*, unless you reveal yourself,
 ordinary users in the bot have zero possibilities of discovering your Telegram user.
 
 Mods and admins in the bot can tell the authors of recent messages apart through a pseudo-random
-ID returned by the `/info` command. This ID changes every 24 hours, posts also expire from
-the cache after 24 hours*²* (or if secretlounge-ng is restarted) meaning that they
+ID returned by the `/info` command. This ID changes every 48 hours, posts also expire from
+the cache after 48 hours*²* (or if secretlounge-ng is restarted) meaning that they
 become unable to be deleted or their authors determined.
 
 People with access to the server the bot runs on have no direct, but a variety of
